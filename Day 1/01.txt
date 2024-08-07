@@ -1,0 +1,151 @@
+1- Display all rows and columns of the table (address)
+
+SELECT
+*
+FROM
+address
+
+2- Display all rows and two columns (address and district) from table (address)
+
+SELECT 
+address,district
+district
+FROM
+address
+
+3- Display all payments in ascending order of payment_id from table (payment)
+
+SELECT
+*
+FROM
+payment
+ORDER BY payment_id
+
+- Note: Default ordering of ORDER BY clause is ascending order.
+
+4- Display all rows of table (payment) in ascending order of customer_id and 
+descending order of amount for same customer_id.
+
+SELECT 
+*
+FROM 
+payment
+ORDER BY customer_id ASC, amount DESC
+
+5- Display all rows of columns (customer_id,last_name,first_name,email) of table
+(customer) in descending order of last_name and descending order of first_name.
+
+SELECT 
+customer_id,last_name,first_name,email
+FROM 
+customer
+ORDER BY 2 DESC, 3 DESC
+
+6- Display all rows of all columns of table () in descending order of 3rd
+column and ascending order of 4th column.
+
+SELECT 
+*
+FROM 
+customer
+ORDER BY 3 DESC,4 ASC
+
+7- Print 1 for each row of table(payment)
+
+SELECT
+1
+FROM
+payment
+
+8- Display all rows and columns of table(payment) but column (payment_id)
+should be displayed twice.
+
+SELECT 
+payment_id,*
+FROM
+payment
+
+9- Note: Keyword DISTINCT will be applied to all columns that will be displayed after
+query execute which means ADAM SANDLER and ADAM WEST both will get printed as even first_name
+is same but last_name is not same so the row is DISTINCT.
+
+10- Display all the DISTINCT value the column (rating) can take in table(film).
+
+SELECT DISTINCT
+rating
+FROM
+film
+
+11- Display all the DISTINCT amount(column) that was paid in descending order of
+amount(column) from table(payment)
+
+SELECT DISTINCT
+amount
+FROM
+payment
+ORDER BY amount DESC
+
+12- Display table rows of top 10 latest rental_date(column) from table(rental).
+
+SELECT 
+*
+FROM
+rental
+ORDER BY rental_date DESC
+LIMIT 100
+
+13- NOTE: LIMIT clause is always in the end.
+
+14- NOTE: COUNT clause doesn't count NULL values.
+
+15- Display total number of customers (count total rows) from table (customer);
+
+SELECT
+COUNT (*)
+FROM
+customer
+
+16- Display total number of customers (count total rows) from table (customer);
+
+SELECT
+COUNT (customer_id)
+FROM
+customer
+
+17- Display total number of customers (count total rows) with DISTINCT first_name
+from table (customer)
+
+SELECT 
+COUNT(DISTINCT first_name)
+FROM
+customer
+
+18- Display all the distinct districts(column) from the table(address).
+
+SELECT DISTINCT
+district
+FROM
+address
+
+19- Display the latest row of rental_date(column) from the table(rental).
+
+SELECT
+rental_date
+FROM
+rental
+ORDER BY rental_date DESC
+LIMIT 1
+
+20- Display the total count of the rows in the table(film).
+
+SELECT 
+COUNT (DISTINCT title)
+FROM
+film
+
+21- Display the count of distinct last_name(column) in the table(customer).
+
+SELECT
+COUNT (DISTINCT last_name)
+FROM
+customer
