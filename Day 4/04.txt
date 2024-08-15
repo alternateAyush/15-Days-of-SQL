@@ -97,4 +97,22 @@ last_name
 FROM customer
 ORDER BY full_name
 
-83- 
+83- NOTE: SUBSTRING(parent_string FROM start_index FOR length_of_substring)
+(length_of_substring is optional i.e. if not provided substring will be till end of parent_string)
+
+84- Disect first name, last name & email provider of customer using only email(column), SUBSTRING,
+POSITION from table(column).
+
+SELECT
+SUBSTRING(email FROM 1 FOR POSITION('.' IN email)-1) as firstName
+,SUBSTRING(
+    email from (POSITION('.' IN email)+1) 
+    FOR (POSITION('@' IN email)-POSITION('.' IN email)-1)
+) as lastName
+,SUBSTRING(email from POSITION('@' IN email)+1) as email_provider
+,email
+FROM customer
+ORDER BY firstName,lastName,email_provider
+
+85- 
+
