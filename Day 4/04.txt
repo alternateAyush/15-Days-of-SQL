@@ -1,0 +1,60 @@
+71- Display list of emails of customers in upper case, lower case and length of email address from table customer.
+
+SELECT 
+UPPER(email)
+,LOWER(email)
+,LENGTH(email)
+FROM customer 
+ORDER BY LENGTH(email) DESC
+
+72- Display the first name, last name and email (in lower case) of customers where length of their 
+first OR last name is greater than 10 from table(customer).
+
+SELECT
+LOWER(first_name)
+,LOWER(last_name)
+,LOWER(email)
+FROM customer
+WHERE LENGTH(first_name)>10 OR LENGTH(last_name)>10
+
+73- Display the 1st two letters of first name, last one letter of last name & third letter of first name
+from table(customer).
+
+SELECT
+LEFT(first_name,2)
+,RIGHT(last_name,1)
+,RIGHT(LEFT(first_name,3),1)
+FROM customer
+
+74- Customer email address always ends with '.org', write a query that shows two ways to extract the '.' from
+'.org' from table(customer).
+
+SELECT
+email
+,LEFT(RIGHT(email,4),1)
+,RIGHT(LEFT(email,LENGTH(email)-3),1)
+FROM customer
+
+75- NOTE: Concatenate: ||
+
+76- With the use of concatenate, display the initials, first name and last name of customer from table(customer).
+
+SELECT
+LEFT(first_name,1) 
+|| '.' 
+|| LEFT(last_name,1) 
+|| '.' as initials
+, first_name
+, last_name
+FROM customer
+
+77- Display the anonymized version of emails from table(customer). Email provider will be same for all.
+Mahatma.Gandhi@sakilacustomer.org => M***@sakilacustomer.org
+
+SELECT 
+LEFT(email,1)
+|| '***'
+|| RIGHT(email,19) as anonymized_email
+FROM customer
+
+78- 
