@@ -57,4 +57,44 @@ LEFT(email,1)
 || RIGHT(email,19) as anonymized_email
 FROM customer
 
-78- 
+78- NOTE: POSITION function gives starting position of first occurrence a character or 
+string present in a string.(1 indexed)
+
+79- Display position of '@' in all email addresses of customers from customer(table).
+
+SELECT 
+POSITION('@' IN email)
+,email
+FROM customer
+
+80- Extract first name from email using position of last name in email address from table(customer).
+(all email format are: firstName.lastName@emailProvider.org)
+
+SELECT
+LEFT(first_name,POSITION(last_name IN email)-2) as f_name
+,email
+FROM customer
+ORDER BY f_name
+
+81- Disect first name,last name and email provider from email address column from table(customer).
+(all email format are: firstName.lastName@emailProvider.org)
+
+SELECT
+LEFT(first_name,POSITION(last_name IN email)-2) as f_name
+,RIGHT(LEFT(email,POSITION('@' IN email)-1),LENGTH(last_name)) as l_name
+,RIGHT(email,LENGTH(email)-POSITION('@' IN email)) as email_provider
+,email
+FROM customer
+ORDER BY f_name,l_name,email_provider
+
+82- Display customer name as "LastName, FirstName" for each customer but you only have email & last_name 
+column to you from table (customer). 
+
+SELECT 
+last_name
+|| ', '
+|| LEFT(email,POSITION(last_name IN email)-2) as full_name
+FROM customer
+ORDER BY full_name
+
+83- 
