@@ -1,4 +1,5 @@
-71- Display list of emails of customers in upper case, lower case and length of email address from table customer.
+71- Display list of emails of customers in upper case, lower case and length of email address 
+from table(customer).
 
 SELECT 
 UPPER(email)
@@ -17,8 +18,8 @@ LOWER(first_name)
 FROM customer
 WHERE LENGTH(first_name)>10 OR LENGTH(last_name)>10
 
-73- Display the 1st two letters of first name, last one letter of last name & third letter of first name
-from table(customer).
+73- Display the 1st two letters of first name, last one letter of last name & third letter of 
+first name from table(customer).
 
 SELECT
 LEFT(first_name,2)
@@ -26,8 +27,8 @@ LEFT(first_name,2)
 ,RIGHT(LEFT(first_name,3),1)
 FROM customer
 
-74- Customer email address always ends with '.org', write a query that shows two ways to extract the '.' from
-'.org' from table(customer).
+74- Customer email address always ends with '.org', write a query that shows two ways 
+to extract the '.' from '.org' from table(customer).
 
 SELECT
 email
@@ -37,7 +38,8 @@ FROM customer
 
 75- NOTE: Concatenate: ||
 
-76- With the use of concatenate, display the initials, first name and last name of customer from table(customer).
+76- With the use of concatenate, display the initials, first name and last name of customer from 
+table(customer).
 
 SELECT
 LEFT(first_name,1) 
@@ -87,8 +89,8 @@ LEFT(first_name,POSITION(last_name IN email)-2) as f_name
 FROM customer
 ORDER BY f_name,l_name,email_provider
 
-82- Display customer name as "LastName, FirstName" for each customer but you only have email & last_name 
-column to you from table (customer). 
+82- Display customer name as "LastName, FirstName" for each customer but you only have email
+& last_name column to you from table (customer). 
 
 SELECT 
 last_name
@@ -114,5 +116,130 @@ SUBSTRING(email FROM 1 FOR POSITION('.' IN email)-1) as firstName
 FROM customer
 ORDER BY firstName,lastName,email_provider
 
-85- 
+85- Display emails of all clients in an anonymized form from customer(table).
+Original: "MARY.SMITH@sakilacustomer.org"
+Anonymized: "M***.S***@sakilacustomer.org"
+
+SELECT
+LEFT(email,1)
+|| '***' 
+|| SUBSTRING(email FROM POSITION('.' IN email) FOR 2)
+|| '***'
+|| SUBSTRING(email FROM POSITION('@' IN email)) AS anonymized_email
+FROM customer
+
+86- Display emails of all clients in an anonymized form from customer(table).
+Original: "MARY.SMITH@sakilacustomer.org"
+Anonymized: "***Y.S***@sakilacustomer.org"
+
+SELECT
+'***' 
+|| SUBSTRING(email FROM POSITION('.' IN email)-1 FOR 3)
+|| '***'
+|| SUBSTRING(email FROM POSITION('@' IN email)) AS anonymized_email
+FROM customer
+
+87- NOTE: EXTRACT(field FROM YEAR-MONTH-DAY HOUR:MINUTE:SECOND.MILLISECONDS 
+                  TIMEZONE/TIMEZONE_HOUR:TIMEZONE_MINUTE).
+                
+88- NOTE: EXTRACT function can extract more than this (refer to day 4 slides).
+
+89- Display month wise rental record in descending order from table(rental)
+
+SELECT
+EXTRACT(MONTH FROM rental_date) as month
+,COUNT(rental_id) as rentals
+FROM rental
+GROUP BY month
+ORDER BY rentals DESC
+
+90- Display month wise payment sum amount in descending order from table(payment).
+
+SELECT
+EXTRACT(MONTH FROM payment_date) as month
+,SUM(amount) as sum_amount
+FROM payment
+GROUP BY month
+ORDER BY sum_amount DESC
+
+91- Display day of week wise payment sum amount in descending order from table(payment).
+
+SELECT
+EXTRACT(DOW FROM payment_date) as day_of_week
+,SUM(amount) as sum_amount
+FROM payment
+GROUP BY day_of_week
+ORDER BY sum_amount DESC
+
+92- Display customer and week wise payment sum amount in descending order from table(payment).
+
+SELECT
+customer_id
+,EXTRACT(WEEK FROM payment_date) as week
+,SUM(amount) as sum_amount
+FROM payment
+GROUP BY week,customer_id
+ORDER BY sum_amount DESC
+
+93- NOTE: TO_CHAR('date/time/interval', customer_format) converts date to string as custom format.
+84- NOTE: There are many custom_formats available (see to_char.pdf/visit postgre website).
+
+85- Display month and year wise payment sum amount in descending order from table(payment).
+
+SELECT 
+TO_CHAR(payment_date, 'MM-YY') as month_year
+,SUM(amount) as sum_amount
+FROM payment
+GROUP BY month_year
+ORDER BY sum_amount DESC
+
+86- Display Day and Date wise payment sum amount in descending order from table(payment).
+
+SELECT
+TO_CHAR(payment_date, 'DY, DD/MM/YYYY') as day_date
+,SUM(amount) as sum_amount
+FROM payment
+GROUP BY day_date
+ORDER BY sum_amount DESC
+
+87- Display month and year wise payment sum amount in descending order from table(payment).
+
+SELECT
+TO_CHAR(payment_date, 'Mon, YYYY') as month_year
+,SUM(amount) as sum_amount
+FROM payment
+GROUP BY month_year
+ORDER BY sum_amount DESC
+
+88- Display day and time wise payment sum amount in descending order from table(payment).
+
+SELECT
+TO_CHAR(payment_date, 'DY, HH:MI') as day_time 
+,SUM(amount) as sum_amount
+FROM payment
+GROUP BY day_time
+ORDER BY sum_amount DESC
+### NOTE: 'MI' is minute 'MM' is month number' ###
+
+89-NOTE: Can use CURRENT_DATE & CURRENT_TIMESTAMP to get current date and current timestamp.
+
+90- Display list of all rental durations for which customer with id=35 rented films
+from table(rental).
+
+SELECT
+customer_id
+,return_date-rental_date as rental_duration
+FROM rental
+WHERE customer_id=35
+ORDER BY rental_duration DESC
+
+91- Display list of avg rental duration for each customer in descending order from table(rental).
+
+SELECT
+customer_id
+,AVG((return_date-rental_date)) as avg_rental_duration
+FROM rental
+GROUP BY customer_id
+ORDER BY avg_rental_duration DESC
+
 
