@@ -204,4 +204,4 @@ in given string to new_text.
 SELECT 
 ticket_no
 ,CAST(REPLACE(passenger_id,' ','') AS BIGINT) as psg_id
-FROM tickets
+FROM tickets;
