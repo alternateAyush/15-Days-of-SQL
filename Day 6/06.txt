@@ -1,1 +1,97 @@
-109- 
+109- NOTE: INNER JOIN output is rows that are common in the both the tables.
+
+110- Display customer first name, last name and payments they made using tables (customer,payment).
+
+SELECT 
+first_name
+,last_name
+,payment.*
+FROM customer
+INNER JOIN payment
+ON customer.customer_id=payment.customer_id
+ORDER BY payment.customer_id
+
+111- Displat comparison between sale of economy,business and comfort seats from 
+table (boarding_passes, seats).
+
+SELECT 
+fare_conditions,
+COUNT(fare_conditions)
+FROM boarding_passes
+INNER JOIN seats
+ON boarding_passes.seat_no=seats.seat_no
+GROUP BY fare_conditions
+ORDER BY COUNT(fare_conditions) DESC
+
+112- NOTE: FULL OUTER JOIN output is all rows from from both the tables
+
+113- Display data of tickets that have not been alloted boarding passes yet using 
+table (boarding_passes, tickets).
+
+SELECT t.*
+FROM tickets as t
+FULL OUTER JOIN boarding_passes as b
+ON t.ticket_no=b.ticket_no
+WHERE seat_no IS NULL
+
+114- NOTE: LEFT OUTER JOIN output is all rows from left table.
+
+115- Display the number of times each seat has been booked by passengers from table
+(seats, boarding_passes).
+
+SELECT s.seat_no,COUNT(*) 
+FROM seats AS s
+LEFT JOIN boarding_passes AS b 
+ON s.seat_no = b.seat_no
+GROUP BY s.seat_no
+ORDER BY  count(*) DESC
+
+116-  Display the number of times each row (A,B,C,...) has been booked by passengers
+from table (seats, boarding_passes).
+
+SELECT RIGHT(s.seat_no,1) AS seat_row
+,COUNT(*)
+FROM seats AS s
+LEFT JOIN boarding_passes AS b 
+ON s.seat_no = b.seat_no
+GROUP BY seat_row
+ORDER BY COUNT(*) DESC
+
+117- NOTE: RIGHT OUTER JOIN output is all rows from left table.
+118- NOTE: TABLE_A LEFT JOIN TABLE_B == TABLE_B RIGHT JOIN TABLE_A.
+
+119- Display contact details of customer from 'Texas' from table (customer, address).
+
+SELECT 
+first_name
+,last_name
+,phone
+,district
+FROM customer AS c
+INNER JOIN address AS a
+ON c.address_id = a.address_id
+WHERE district = 'Texas'
+
+118- Display addresses that belong to no customer from table (customer, address).
+
+SELECT 
+a.*
+FROM customer AS c
+RIGHT JOIN address AS a
+ON c.address_id = a.address_id
+WHERE c.customer_id IS NULL
+
+119- JOIN conditions can also be used as filters like WHERE clause
+
+120- Display the average prices of seats from table (seats, ticket_flights).
+
+SELECT
+seat_no
+,ROUND(AVG(amount),2)
+FROM boarding_passes as b
+INNER JOIN ticket_flights as t
+ON b.ticket_no = t.ticket_no AND b.flight_id = t.flight_id
+GROUP BY seat_no
+ORDER BY avg(amount) DESC
+
+121- 
